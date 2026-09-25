@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeNest — Learn to Code by Building</title>
+<meta name="description" content="CodeNest is a beginner-friendly in-browser IDE for learning HTML, CSS and JavaScript. Write real code, see it run instantly, and understand how the web actually works.">
+<meta name="theme-color" content="#0B0F1A">
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+
+<!--
+  REPLACE THE DOMAIN BELOW
+  Every "https://yourdomain.com" in this file (canonical, og:url,
+  og:image, twitter:image, and in sitemap.xml / robots.txt) is a
+  placeholder. Swap it for your real deployed domain before going live —
+  a wrong/placeholder canonical URL actively hurts SEO, it doesn't just
+  do nothing.
+-->
+<link rel="canonical" href="https://yourdomain.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="CodeNest — Learn to Code by Building">
+<meta property="og:description" content="A beginner-friendly in-browser IDE for learning HTML, CSS and JavaScript with live preview.">
+<meta property="og:site_name" content="CodeNest">
+<meta property="og:url" content="https://yourdomain.com/">
+<meta property="og:image" content="https://yourdomain.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CodeNest — an in-browser code editor with live preview">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CodeNest — Learn to Code by Building">
+<meta name="twitter:description" content="A beginner-friendly in-browser IDE for learning HTML, CSS and JavaScript with live preview.">
+<meta name="twitter:image" content="https://yourdomain.com/og-image.png">
+<meta name="twitter:image:alt" content="CodeNest — an in-browser code editor with live preview">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CodeNest",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "description": "A beginner-friendly in-browser IDE for learning HTML, CSS and JavaScript."
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+<!--
+  ADSENSE VERIFICATION / GLOBAL SCRIPT TAG
+  When AdSense approves the site, paste the auto-ads / site-verification
+  <script> snippet here, in <head>, before </head>. Nothing else on this
+  page needs to change for that step.
+-->
+</head>
+<body data-theme="dark">
+
+<!-- Skip link for accessibility -->
+<a class="skip-link" href="#editor-panel">Skip to editor</a>
+
+<!-- ============================== NAVBAR ============================== -->
+<header class="navbar" role="banner">
+  <div class="navbar__left">
+    <button class="icon-btn drawer-toggle" id="drawerToggle" aria-label="Toggle project explorer" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 4L2 12L8 20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4L22 12L16 20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg>
+      </span>
+      <span class="brand__name">CodeNest</span>
+    </div>
+    <div class="project-name-wrap">
+      <input id="projectNameInput" class="project-name-input" type="text" value="My Project" maxlength="40" aria-label="Project name" spellcheck="false">
+      <svg class="project-name-icon" width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="navbar__right">
+    <button class="icon-btn" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme">
+      <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.4M12 19.6V22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2 12h2.4M19.6 12H22M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" style="display:none"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+    </button>
+
+    <button class="btn btn--run" id="runBtn" title="Run project (Ctrl+Enter)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8V4z"/></svg>
+      <span>Run</span>
+    </button>
+
+    <button class="btn btn--ghost" id="formatBtn" title="Format current file (Shift+Alt+F)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="btn-label-full">Format</span>
+    </button>
+
+    <button class="btn btn--ghost" id="previewToggleBtn" aria-pressed="false" title="Toggle live preview">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="btn-label-full">Preview</span>
+    </button>
+
+    <div class="divider-v" aria-hidden="true"></div>
+
+    <button class="icon-btn" id="copyBtn" title="Copy current file (Ctrl+Shift+C)" aria-label="Copy current file">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2"/></svg>
+    </button>
+    <button class="icon-btn" id="downloadBtn" title="Download project as .zip" aria-label="Download project">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <button class="icon-btn" id="settingsBtn" title="Settings" aria-label="Open settings" aria-haspopup="dialog">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M19.4 13a7.97 7.97 0 0 0 0-2l2-1.5-2-3.4-2.4 1a8 8 0 0 0-1.7-1L15 3h-6l-.3 2.6a8 8 0 0 0-1.7 1l-2.4-1-2 3.4L4.6 11a7.97 7.97 0 0 0 0 2l-2 1.5 2 3.4 2.4-1a8 8 0 0 0 1.7 1L9 21h6l.3-2.6a8 8 0 0 0 1.7-1l2.4 1 2-3.4L19.4 13Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ==========================================================
+     AD SLOT — TOP BANNER (728×90 desktop / 320×50 mobile)
+     Empty for now. When AdSense is approved, paste the <ins
+     class="adsbygoogle">...</ins> + <script> snippet straight
+     inside #adTop, right where the comment says so. Do not
+     rename or remove the #adTop / .ad-slot markup — the CSS
+     reserves this exact height so nothing shifts when the ad
+     loads (avoids layout-shift penalties).
+     ========================================================== -->
+<div class="ad-slot ad-slot--top" id="adTop" aria-hidden="true">
+  <!-- AdSense unit goes here -->
+</div>
+
+<!-- ============================== WORKSPACE ============================== -->
+<div class="workspace">
+
+  <!-- Mobile drawer backdrop -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+  <!-- LEFT: Project Explorer -->
+  <aside class="explorer" id="explorer" aria-label="Project explorer">
+    <div class="explorer__header">
+      <span>Explorer</span>
+      <button class="icon-btn icon-btn--sm" id="explorerCloseBtn" aria-label="Close explorer" title="Close">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="explorer__tree">
+      <div class="tree-folder">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span id="explorerProjectLabel">My Project</span>
+      </div>
+      <ul class="tree-files" id="fileTree" role="tablist" aria-label="Project files">
+        <li>
+          <button class="tree-file active" data-file="html" role="tab" aria-selected="true">
+            <span class="tree-file__dot tree-file__dot--html"></span>index.html
+          </button>
+        </li>
+        <li>
+          <button class="tree-file" data-file="css" role="tab" aria-selected="false">
+            <span class="tree-file__dot tree-file__dot--css"></span>style.css
+          </button>
+        </li>
+        <li>
+          <button class="tree-file" data-file="js" role="tab" aria-selected="false">
+            <span class="tree-file__dot tree-file__dot--js"></span>script.js
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="explorer__footer">
+      <button class="text-btn" id="resetBtn" title="Reset project to default">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M20 20v-6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.6 15A8 8 0 1 0 6 6.3L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Reset project
+      </button>
+    </div>
+  </aside>
+
+  <!-- CENTER: Editor -->
+  <main class="editor-panel" id="editor-panel">
+    <div class="tabs" role="tablist" aria-label="Open files">
+      <button class="tab active" data-file="html" role="tab" aria-selected="true">
+        <span class="tree-file__dot tree-file__dot--html"></span>index.html
+      </button>
+      <button class="tab" data-file="css" role="tab" aria-selected="false">
+        <span class="tree-file__dot tree-file__dot--css"></span>style.css
+      </button>
+      <button class="tab" data-file="js" role="tab" aria-selected="false">
+        <span class="tree-file__dot tree-file__dot--js"></span>script.js
+      </button>
+    </div>
+
+    <div class="editor-surface">
+      <div class="gutter" id="gutter" aria-hidden="true"></div>
+      <div class="code-area">
+        <pre class="highlight-layer" id="highlightLayer" aria-hidden="true"><code id="highlightCode"></code></pre>
+        <div class="active-line" id="activeLine" aria-hidden="true"></div>
+        <textarea
+          id="codeInput"
+          class="code-input"
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="off"
+          autocorrect="off"
+          wrap="off"
+          aria-label="Code editor"
+        ></textarea>
+      </div>
+    </div>
+  </main>
+
+  <!-- Resizer -->
+  <div class="resizer" id="resizer" role="separator" aria-orientation="vertical" aria-label="Resize preview panel" tabindex="0"></div>
+
+  <!-- RIGHT: Preview -->
+  <section class="preview-panel" id="previewPanel" aria-label="Live preview">
+    <div class="preview-panel__header">
+      <div class="preview-panel__dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <span class="preview-panel__title">Preview</span>
+      <div class="preview-panel__actions">
+        <button class="icon-btn icon-btn--sm" id="refreshPreviewBtn" title="Refresh preview" aria-label="Refresh preview">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4v6h6M20 20v-6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.6 15A8 8 0 1 0 6 6.3L4 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn icon-btn--sm" id="previewCloseBtn" title="Close preview" aria-label="Close preview">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="preview-panel__frame-wrap">
+      <iframe id="previewFrame" title="Live preview of your project" sandbox="allow-scripts allow-modals allow-forms allow-popups"></iframe>
+    </div>
+    <div class="preview-console" aria-label="Console output">
+      <div class="preview-console__header">
+        <span>Console</span>
+        <button class="icon-btn icon-btn--sm" id="previewConsoleClearBtn" title="Clear console" aria-label="Clear console">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="preview-console__body" id="previewConsoleBody"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       AD SLOT — SIDEBAR RAIL (160×600). Slim rail, not the old
+       300×600 skyscraper — keeps the editor wide. Hidden below
+       1180px (see style.css) so it never squeezes the workspace
+       on laptop/tablet widths. Paste the AdSense unit inside
+       #adSidebar when ready.
+       ========================================================== -->
+  <aside class="ad-slot ad-slot--sidebar" id="adSidebar" aria-hidden="true">
+    <!-- AdSense unit goes here -->
+  </aside>
+</div>
+
+<!-- ============================== MOBILE PREVIEW MODAL ============================== -->
+<div class="mobile-preview-modal" id="mobilePreviewModal" role="dialog" aria-modal="true" aria-label="Live preview">
+  <div class="mobile-preview-modal__header">
+    <span>Preview</span>
+    <button class="icon-btn" id="mobilePreviewCloseBtn" aria-label="Close preview">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <iframe id="mobilePreviewFrame" title="Live preview of your project (mobile)" sandbox="allow-scripts allow-modals allow-forms allow-popups"></iframe>
+  <div class="preview-console preview-console--mobile" aria-label="Console output">
+    <div class="preview-console__header">
+      <span>Console</span>
+      <button class="icon-btn icon-btn--sm" id="mobilePreviewConsoleClearBtn" title="Clear console" aria-label="Clear console">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="preview-console__body" id="mobilePreviewConsoleBody"></div>
+  </div>
+</div>
+
+<!-- ============================== STATUS BAR ============================== -->
+<footer class="status-bar" role="contentinfo">
+  <div class="status-bar__left">
+    <span class="status-chip status-chip--saved" id="savedIndicator">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Saved
+    </span>
+    <span class="status-sep">•</span>
+    <span id="statusCurrentFile">index.html</span>
+  </div>
+  <div class="status-bar__right">
+    <span id="statusCursor">Ln 1, Col 1</span>
+    <span class="status-sep">•</span>
+    <span id="statusChars">0 chars</span>
+    <span class="status-sep">•</span>
+    <span id="statusTheme">Dark theme</span>
+  </div>
+</footer>
+
+<!-- ============================== SETTINGS MODAL ============================== -->
+<div class="modal-backdrop" id="settingsBackdrop">
+  <div class="modal settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal__header">
+      <h2 id="settingsTitle">Settings</h2>
+      <button class="icon-btn" id="settingsCloseBtn" aria-label="Close settings">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal__body">
+      <div class="setting-row">
+        <label for="fontSizeRange">Font size</label>
+        <div class="setting-control">
+          <input type="range" id="fontSizeRange" min="12" max="22" step="1" value="14">
+          <span class="setting-value" id="fontSizeValue">14px</span>
+        </div>
+      </div>
+      <div class="setting-row">
+        <label for="tabSizeRange">Tab size</label>
+        <div class="setting-control">
+          <input type="range" id="tabSizeRange" min="2" max="8" step="2" value="4">
+          <span class="setting-value" id="tabSizeValue">4 spaces</span>
+        </div>
+      </div>
+      <div class="setting-row">
+        <label for="wordWrapToggle">Word wrap</label>
+        <label class="switch">
+          <input type="checkbox" id="wordWrapToggle" checked>
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <label for="themeSelect">Theme</label>
+        <select id="themeSelect" class="select-control">
+          <option value="auto">Auto (system)</option>
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label for="previewWidthRange">Preview width</label>
+        <div class="setting-control">
+          <input type="range" id="previewWidthRange" min="280" max="900" step="10" value="480">
+          <span class="setting-value" id="previewWidthValue">480px</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn btn--ghost" id="resetSettingsBtn">Reset to defaults</button>
+      <button class="btn btn--primary" id="settingsDoneBtn">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============================== SITE FOOTER ============================== -->
+<footer class="site-footer">
+  <span>© 2026 CodeNest</span>
+  <nav aria-label="Site pages">
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
