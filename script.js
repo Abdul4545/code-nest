@@ -1,5 +1,5 @@
 /* =========================================================================
-   CodeNest — Application Logic
+   MyCodeNest — Application Logic
    Sections:
      1. Constants & State
      2. DOM References
@@ -25,7 +25,7 @@
 
   /* --------------------------- 1. CONSTANTS & STATE --------------------------- */
 
-  const STORAGE_KEY = 'codenest.project.v1';
+  const STORAGE_KEY = 'MyCodeNest.project.v1';
   const DEBOUNCE_MS = 220;
 
   /** @type {{html:string, css:string, js:string}} */
@@ -132,7 +132,7 @@
       if (data.state) state = { ...state, ...data.state };
       return true;
     } catch (e) {
-      console.warn('CodeNest: failed to load saved project, starting fresh.', e);
+      console.warn('MyCodeNest: failed to load saved project, starting fresh.', e);
       return false;
     }
   }
@@ -142,7 +142,7 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ files, state }));
       flashSaved();
     } catch (e) {
-      console.warn('CodeNest: failed to save project.', e);
+      console.warn('MyCodeNest: failed to save project.', e);
     }
   }
 
@@ -189,10 +189,10 @@ h1 {
   color: #7c6ff2;
 }`,
       js:
-`// Welcome to CodeNest!
+`// Welcome to MyMyCodeNest!
 // This is script.js — write JavaScript here.
 
-console.log("Hello from CodeNest");`,
+console.log("Hello from MyMyCodeNest");`,
     };
   }
 
@@ -819,12 +819,12 @@ console.log("Hello from CodeNest");`,
     var original = console[level];
     console[level] = function(){
       var text = Array.prototype.map.call(arguments, serialize).join(' ');
-      try { window.parent.postMessage({ source: 'codenest-console', level: level, text: text }, '*'); } catch (e) {}
+      try { window.parent.postMessage({ source: 'MyCodeNest-console', level: level, text: text }, '*'); } catch (e) {}
       original.apply(console, arguments);
     };
   });
   window.addEventListener('error', function(e){
-    try { window.parent.postMessage({ source: 'codenest-console', level: 'error', text: e.message || 'Script error' }, '*'); } catch (err) {}
+    try { window.parent.postMessage({ source: 'MyCodeNest-console', level: 'error', text: e.message || 'Script error' }, '*'); } catch (err) {}
   });
 })();`;
     (doc.head || doc.documentElement).insertBefore(consoleShim, (doc.head || doc.documentElement).firstChild);
@@ -866,7 +866,7 @@ console.log("Hello from CodeNest");`,
 
   function bindConsoleMessages() {
     window.addEventListener('message', (e) => {
-      if (!e.data || e.data.source !== 'codenest-console') return;
+      if (!e.data || e.data.source !== 'MyCodeNest-console') return;
       if (previewFrame.contentWindow && e.source === previewFrame.contentWindow) {
         appendConsoleLine(previewConsoleBody, e.data.level, e.data.text);
       } else if (mobilePreviewFrame.contentWindow && e.source === mobilePreviewFrame.contentWindow) {
@@ -938,7 +938,7 @@ console.log("Hello from CodeNest");`,
     const blob = await zip.generateAsync({ type: 'blob' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    const safeName = (state.projectName || 'codenest-project').trim().replace(/[^a-z0-9-_ ]/gi, '') || 'codenest-project';
+    const safeName = (state.projectName || 'MyCodeNest-project').trim().replace(/[^a-z0-9-_ ]/gi, '') || 'MyCodeNest-project';
     a.href = url;
     a.download = `${safeName}.zip`;
     document.body.appendChild(a);
