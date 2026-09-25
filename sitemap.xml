@@ -1,15 +1,17 @@
-<?xml version="1.0" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap-image/1.1" encoding="utf-8">
-  <url>
-    <loc>https://mycodenest.in/</loc>
-  </url>
-  <url>
-    <loc>https://mycodenest.in/about</loc>
-  </url>
-  <url>
-    <loc>https://mycodenest.in/contact</loc>
-  </url>
-  <url>
-    <loc>https://mycodenest.in/privacy</loc>
-  </url>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>https://mycodenest.in/</loc>
+    </url>
+
+    <url>
+        <loc>https://mycodenest.in/about.html</loc>
+    </url>
+
+    <url>
+        <loc>https://mycodenest.in/contact.html</loc>
+    </url>
+
 </urlset>
