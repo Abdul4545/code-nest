@@ -189,10 +189,10 @@ h1 {
   color: #7c6ff2;
 }`,
       js:
-`// Welcome to MyMyCodeNest!
+`// Welcome to MyCodeNest!
 // This is script.js — write JavaScript here.
 
-console.log("Hello from MyMyCodeNest");`,
+console.log("Hello from MyCodeNest");`,
     };
   }
 
